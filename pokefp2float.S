@@ -27,6 +27,7 @@ pokeFP2float:
 	MOV R8, #0x0f
 	AND R9, R0, R8  // this operation is to extract the mantissa
 	
+	LSR R7, R7, #4    // shift the bist 4 to the begining
 	SUB R7, R7, #3    // subtract 3 from the expo
 	ADD R7, R7, #127   // add  127 to the result 
 	
