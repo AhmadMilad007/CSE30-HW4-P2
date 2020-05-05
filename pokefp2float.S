@@ -14,9 +14,36 @@ pokeFP2float:
 	add  	fp, sp, #FP_OFFSET	// using SP to update FP to the new stackframe
 
   //=================== YOUR CODE GOES IN THE SECTION BELOW ===================//
+	
+	CMP R0, #0x80  //if r0 == -0
+	BEQ funC
+	CMP R0, #0x00  //else if r0==0
+	BEQ funC
+	
+	MOV R4, #80    // assign r4 to be a -0
+	AND R5, R0, R4  // this should get us the signe bit 
+	MOV R6, #0x70
+	AND R7, R0, R6  // this operation is to extract the expo
+	MOV R8, #0x0f
+	AND R9, R0, R8  // this operation is to extract the mantissa
+	
+	SUB R7, R7, #3    // subtract 3 from the expo
+	ADD R7, R7, #127   // add  127 to the result 
+	
+	LSL R5, #24       // sign sheft the sign bit all the way to the front MSB
+	LSL R7, #23       // expo sheft the exponent all the way to one before the sign 
+	LSL R9, #19       // mentissa sheft the mentissa all the way to one before the expo 
 
-
-
+	
+	ORR R5, R5, R7    // overlay the sign and expo 
+	ORR R5, R5, R9    // overlay sign exp with mantissa 
+	MOV R0, R5       // return the IEEE 
+	
+			//TODO: here i might need to add an unconditional label to avoid infint loop
+	funC:
+		BL pokeFP2float
+		
+	
 
 
   //===========================================================================//
@@ -38,8 +65,10 @@ zeroPokeFP2float:
 
   //=================== YOUR CODE GOES IN THE SECTION BELOW ===================//
 
-
-
+	MOV R5, #0x80   // create an a new immediate reg
+	AND R5, R0, R5 // take the input from r0
+	LSL R5, #24   // shift the sign bit all the way to the front
+	MOV R0, R5	// return the IEEE
 
 
   //===========================================================================//
