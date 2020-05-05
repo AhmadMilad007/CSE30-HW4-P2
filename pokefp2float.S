@@ -30,9 +30,9 @@ pokeFP2float:
 	SUB R7, R7, #3    // subtract 3 from the expo
 	ADD R7, R7, #127   // add  127 to the result 
 	
-	LSL R5, #24       // sign sheft the sign bit all the way to the front MSB
-	LSL R7, #23       // expo sheft the exponent all the way to one before the sign 
-	LSL R9, #19       // mentissa sheft the mentissa all the way to one before the expo 
+	LSL R5,R5,#24       // sign sheft the sign bit all the way to the front MSB
+	LSL R7,R7,#23       // expo sheft the exponent all the way to one before the sign 
+	LSL R9,R9,#19       // mentissa sheft the mentissa all the way to one before the expo 
 
 	
 	ORR R5, R5, R7    // overlay the sign and expo 
