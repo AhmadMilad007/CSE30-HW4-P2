@@ -42,7 +42,7 @@ pokeFP2float:
 	B DONE		//skip over the funciton
 	
 	funC:
-		BL pokeFP2float
+		BL zeroPokeFP2float
 
 	DONE:
 		
